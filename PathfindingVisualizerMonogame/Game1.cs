@@ -242,39 +242,44 @@ namespace PathfindingVisualizerMonogame
                 {
                     coolButtons[i].Color = Color.Green;
                     Graph<GridSquare> graph = CreateGraph();
-                    Vertex<GridSquare> startVertex = PositionToVertex[start.Index];
-                    Vertex<GridSquare> endVertex = PositionToVertex[end.Index];
-                    if (coolButtons[i].AlgorithmType == AlgorithmType.Astar)
+                    if(start != null && end != null)
                     {
-                        // DEBUG heap cuz its dosent work lol 
-                        ClearTiles();
-                        (path, visitedSquares) = graph.AStarSearchAlgorithm(startVertex, endVertex);
-                        pathWatch.Start();
-                        visitedWatch.Start();
-                    }
-                    else if (coolButtons[i].AlgorithmType == AlgorithmType.Dijkstra)
-                    {
-                        ClearTiles();
-                        (path, visitedSquares) = graph.DijkstraAlgorithm(startVertex, endVertex);
-                        pathWatch.Start();
-                        visitedWatch.Start();
-                    }
-                    else
-                    {
-                        ClearTiles();
-                        (path, visitedSquares) = graph.BFS(startVertex, endVertex);
-                        pathWatch.Start();
-                        visitedWatch.Start();
-                    }
-                    for (int j = 0; j < coolButtons.Count; j++)
-                    {
-                        if (coolButtons[j] != coolButtons[i])
+                        Vertex<GridSquare> startVertex = PositionToVertex[start.Index];
+                        Vertex<GridSquare> endVertex = PositionToVertex[end.Index];
+
+                        if (coolButtons[i].AlgorithmType == AlgorithmType.Astar)
                         {
-                            coolButtons[j].Color = Color.Gray;
+                            // DEBUG heap cuz its dosent work lol 
+                            ClearTiles();
+                            (path, visitedSquares) = graph.AStarSearchAlgorithm(startVertex, endVertex);
+                            pathWatch.Start();
+                            visitedWatch.Start();
                         }
+                        else if (coolButtons[i].AlgorithmType == AlgorithmType.Dijkstra)
+                        {
+                            ClearTiles();
+                            (path, visitedSquares) = graph.DijkstraAlgorithm(startVertex, endVertex);
+                            pathWatch.Start();
+                            visitedWatch.Start();
+                        }
+                        else
+                        {
+                            ClearTiles();
+                            (path, visitedSquares) = graph.BFS(startVertex, endVertex);
+                            pathWatch.Start();
+                            visitedWatch.Start();
+                        }
+                        for (int j = 0; j < coolButtons.Count; j++)
+                        {
+                            if (coolButtons[j] != coolButtons[i])
+                            {
+                                coolButtons[j].Color = Color.Gray;
+                            }
+                        }
+                        pathCount = 0;
+                        visitedCount = 0;
                     }
-                    pathCount = 0;
-                    visitedCount = 0;
+                   
                     //for (int j = 1; j < path.Count - 1; j++)
                     //{
                     //    path[j].Type = SquareType.Path;
